@@ -54,11 +54,7 @@ namespace SortAlgos
         /// <summary>
         /// Begin sorting the SortingList data.
         /// </summary>
-        public void PerformSort()
-        {
-            throw new NotImplementedException("The sort does not have any procedures.\n" +
-                                              "Please implement an override for the PreformSort function");
-        }
+        public abstract void PerformSort();
 
         /// <summary>
         /// Output the SortingList data to file

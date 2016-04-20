@@ -45,6 +45,9 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuickSort.cs">
+      <DependentUpon>SortingBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="SortingBase.cs" />
   </ItemGroup>
   <ItemGroup>
