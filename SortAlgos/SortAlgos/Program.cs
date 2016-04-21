@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SortAlgos
 {
@@ -12,72 +13,46 @@ namespace SortAlgos
         static void Main(string[] args)
         {
             //Var's
-            var timer = new Stopwatch();
             var quickSort = new QuickSort();
 
-            //Sorting template:
-            /*
-            output "generating data"
-            generate data
-            output "start sort type"
-            timer start
-            perform sort
-            timer stop
-            output timer
-            sortType.OutputListToFile
-            timer reset
+            /* Driver template comments
+            Set data generation order.
+            Process the sort
             */
 
-            //qs random
-            Console.WriteLine("Generating numbers for Quicksort Random");
-            quickSort.GenerateRandomData();
-            Console.WriteLine("Start Quicksort Random!");
-            timer.Start();
-            quickSort.PerformSort();
-            timer.Stop();
-            Console.WriteLine("Timer Elapsed: " + timer.Elapsed +
-                              "\nTimer in MS: " + timer.ElapsedMilliseconds +
-                              "\nTimer in Ticks: " + timer.ElapsedTicks);
-            Console.WriteLine("Outputting to file...");
-            quickSort.OutputListToFile("QuickSortRandom");
-            timer.Reset();
-            Console.WriteLine("-----");
 
+            //Quick Sorts
+            quickSort.DataGenerationOrder = GenerationOrder.Randomized;
+            ProcessSort(quickSort, "Quicksort Randomized");
 
-            //qs ascending
-            Console.WriteLine("Generating numbers for Quicksort Ascending");
-            quickSort.GenerateAscendingData();
-            Console.WriteLine("Start Quicksort Ascending!");
-            timer.Start();
-            quickSort.PerformSort();
-            timer.Stop();
-            Console.WriteLine("Timer Elapsed: " + timer.Elapsed +
-                              "\nTimer in MS: " + timer.ElapsedMilliseconds +
-                              "\nTimer in Ticks: " + timer.ElapsedTicks);
-            Console.WriteLine("Outputting to file...");
-            quickSort.OutputListToFile("QuickSortAscending");
-            timer.Reset();
-            Console.WriteLine("-----");
+            quickSort.DataGenerationOrder = GenerationOrder.Ascending;
+            ProcessSort(quickSort, "Quicksort Ascending");
 
-            //qs descending
-            Console.WriteLine("Generating numbers for Quicksort Descending");
-            quickSort.GenerateDescendingData();
-            Console.WriteLine("Start Quicksort Descending!");
-            timer.Start();
-            quickSort.PerformSort();
-            timer.Stop();
-            Console.WriteLine("Timer Elapsed: " + timer.Elapsed +
-                              "\nTimer in MS: " + timer.ElapsedMilliseconds +
-                              "\nTimer in Ticks: " + timer.ElapsedTicks);
-            Console.WriteLine("Outputting to file...");
-            quickSort.OutputListToFile("QuickSortDescending");
-            timer.Reset();
-            Console.WriteLine("-----");
+            quickSort.DataGenerationOrder = GenerationOrder.Descending;
+            ProcessSort(quickSort, "Quicksort Descending");
 
             //End of qs
             Console.WriteLine("\nQuick sorts done. Hit any key to clear screen and continue.");
             Console.ReadKey();
             Console.Clear();
+        }
+
+        private static void ProcessSort(SortingBase sortToProcess, string sortDescription)
+        {
+            var timer = new Stopwatch();
+            Console.WriteLine($"Generating numbers for {sortDescription}");//If this doesn't work in VS 2012, switch with non-interpolated string.
+            sortToProcess.GenerateData();
+            Console.WriteLine($"Start {sortDescription}!"); //If this doesn't work in VS 2012, switch with non-interpolated string.
+            timer.Start();
+            sortToProcess.PerformSort();
+            timer.Stop();
+            Console.WriteLine($"\tTimer Elapsed: {timer.Elapsed}" +
+                              $"\n\tTimer in MS: {timer.ElapsedMilliseconds}" +
+                              $"\n\tTimer in Ticks: {timer.ElapsedTicks}");//If this doesn't work in VS 2012, switch with non-interpolated string.
+            Console.WriteLine("Outputting to file...");
+            sortToProcess.OutputListToFile(sortDescription);
+            timer.Reset();
+            Console.WriteLine("-----\n");
         }
     }
 }
