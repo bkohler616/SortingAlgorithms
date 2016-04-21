@@ -15,6 +15,11 @@ namespace SortAlgos
             //Var's
             var quickSort = new QuickSort();
 
+            /* Driver template comments
+            Set data generation order.
+            Process the sort
+            */
+
 
             //Quick Sorts
             quickSort.DataGenerationOrder = GenerationOrder.Randomized;
@@ -35,15 +40,15 @@ namespace SortAlgos
         private static void ProcessSort(SortingBase sortToProcess, string sortDescription)
         {
             var timer = new Stopwatch();
-            Console.WriteLine($"Generating numbers for {sortDescription}");
+            Console.WriteLine($"Generating numbers for {sortDescription}");//If this doesn't work in VS 2012, switch with non-interpolated string.
             sortToProcess.GenerateData();
-            Console.WriteLine($"Start {sortDescription}!");
+            Console.WriteLine($"Start {sortDescription}!"); //If this doesn't work in VS 2012, switch with non-interpolated string.
             timer.Start();
             sortToProcess.PerformSort();
             timer.Stop();
-            Console.WriteLine("\tTimer Elapsed: " + timer.Elapsed +
-                              "\n\tTimer in MS: " + timer.ElapsedMilliseconds +
-                              "\n\tTimer in Ticks: " + timer.ElapsedTicks);
+            Console.WriteLine($"\tTimer Elapsed: {timer.Elapsed}" +
+                              $"\n\tTimer in MS: {timer.ElapsedMilliseconds}" +
+                              $"\n\tTimer in Ticks: {timer.ElapsedTicks}");//If this doesn't work in VS 2012, switch with non-interpolated string.
             Console.WriteLine("Outputting to file...");
             sortToProcess.OutputListToFile(sortDescription);
             timer.Reset();
