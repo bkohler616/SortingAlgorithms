@@ -13,23 +13,41 @@ namespace SortAlgos
         static void Main(string[] args)
         {
             //Var's
-            var quickSort = new QuickSort();
+            SortingBase sorts;
 
             /* Driver template comments
             Set data generation order.
             Process the sort
             */
-
-
             //Quick Sorts
-            quickSort.DataGenerationOrder = GenerationOrder.Randomized;
-            ProcessSort(quickSort, "Quicksort Randomized");
+            sorts = new QuickSort();
+            sorts.DataGenerationOrder = GenerationOrder.Randomized;
+            ProcessSort(sorts, "Quicksort Randomized");
 
-            quickSort.DataGenerationOrder = GenerationOrder.Ascending;
-            ProcessSort(quickSort, "Quicksort Ascending");
+            sorts = new QuickSort();
+            sorts.DataGenerationOrder = GenerationOrder.Ascending;
+            ProcessSort(sorts, "Quicksort Ascending");
 
-            quickSort.DataGenerationOrder = GenerationOrder.Descending;
-            ProcessSort(quickSort, "Quicksort Descending");
+            sorts = new QuickSort();
+            sorts.DataGenerationOrder = GenerationOrder.Descending;
+            ProcessSort(sorts, "Quicksort Descending");
+
+            //End of qs
+            Console.WriteLine("\nQuick sorts done. Hit any key to clear screen and continue.");
+            Console.ReadKey();
+            Console.Clear();
+
+
+            //Bubble Sorts
+            sorts = new BubbleSort();
+            sorts.DataGenerationOrder = GenerationOrder.Randomized;
+            ProcessSort(sorts, "Bubble Randomized");
+
+            sorts.DataGenerationOrder = GenerationOrder.Ascending;
+            ProcessSort(sorts, "Bubble Ascending");
+
+            sorts.DataGenerationOrder = GenerationOrder.Descending;
+            ProcessSort(sorts, "Bubble Descending");
 
             //End of qs
             Console.WriteLine("\nQuick sorts done. Hit any key to clear screen and continue.");

@@ -9,7 +9,7 @@ namespace SortAlgos
         /// <summary>
         /// The size limit of the data list.
         /// </summary>
-        private const int MaxSize = 500000;
+        protected const int MaxSize = 500000;
         /// <summary>
         /// The data where all of the sorting information will be stored.
         /// </summary>
