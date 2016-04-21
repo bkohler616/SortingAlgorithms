@@ -15,10 +15,30 @@ namespace SortAlgos
         /// </summary>
         public int[] SortingList { get; set; }
 
+        public GenerationOrder DataGenerationOrder { get; set; }
+
+        public void GenerateData()
+        {
+            switch (DataGenerationOrder)
+            {
+                case GenerationOrder.Ascending:
+                    GenerateAscendingData();
+                    break;
+                case GenerationOrder.Descending:
+                    GenerateDescendingData();
+                    break;
+                case GenerationOrder.Randomized:
+                    GenerateRandomData();
+                    break;
+                default:
+                    throw new MissingMemberException("This sort order type is invalid, or unavailable");
+            }
+        }
+
         /// <summary>
         /// Generate descending data
         /// </summary>
-        public void GenerateDescendingData()
+        private void GenerateDescendingData()
         {
             SortingList = new int[MaxSize];
             int temp = MaxSize;
@@ -32,7 +52,7 @@ namespace SortAlgos
         /// <summary>
         /// Generate random integers to be sorted.
         /// </summary>
-        public void GenerateRandomData()
+        private void GenerateRandomData()
         {
             var rng = new Random();
             SortingList = new int[MaxSize];
@@ -44,7 +64,7 @@ namespace SortAlgos
         /// <summary>
         /// Generate Ascending integers to be sorted
         /// </summary>
-        public void GenerateAscendingData()
+        private void GenerateAscendingData()
         {
             SortingList = new int[MaxSize];
             for (var i = 0; i < MaxSize; i++)
