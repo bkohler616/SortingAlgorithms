@@ -19,8 +19,7 @@ namespace SortAlgos
                 return;
 
             //Get the middle item
-            var middle = low + (high - low)/2;
-            var pivot = data [middle];
+            var pivot = data [low + (high - low) / 2];
 
             int incrementalLow = low, incrementalHigh = high;
             while (incrementalLow <= incrementalHigh) {
@@ -34,17 +33,16 @@ namespace SortAlgos
                 }
 
                 //If we managed to get low to get past high, assume it's sorted properly.
-                if (incrementalLow <= incrementalHigh) {
-                    //Swap data items
-                    var temp = data [incrementalLow];
-                    data [incrementalLow] = data [incrementalHigh];
-                    data [incrementalHigh] = temp;
-                    incrementalLow++;
-                    incrementalHigh--;
-                }
+                if (incrementalLow > incrementalHigh) continue; //Shave off ~1-3 ms by using continue.
+                //Swap data items
+                var temp = data [incrementalLow];
+                data [incrementalLow] = data [incrementalHigh];
+                data [incrementalHigh] = temp;
+                incrementalLow++;
+                incrementalHigh--;
             }
 
-            //Create new threads, and go further on each pivot if needed.
+            //Create new threads, and go further on each pivot if needed. This shaves time by ~300 ms
             if (isMultithread) {
                 if (low < incrementalHigh) {
                     Task.Factory.StartNew(() => { quickSort(data, low, incrementalHigh, false); });
@@ -52,13 +50,13 @@ namespace SortAlgos
                 if (high > incrementalLow) {
                     Task.Factory.StartNew(() => { quickSort(data, incrementalLow, high, false); });
                 }
-                //Task.WaitAll(lowEnd, highEnd);//Aparently, this adds 300 ms to the time.
+                //Task.WaitAll(lowEnd, highEnd);//Aparently, this adds ~150-300 ms to the time.
             }
             else {
                 if (low < incrementalHigh)
                     quickSort(data, low, incrementalHigh, false);
                 if (high > incrementalLow)
-                    quickSort(data, incrementalLow, high, false);
+                    quickSort(data, incrementalLow, high, false); //It is better to use tail recursion rather than a loop. A loop increases time by ~ 4-8 ms
             }
         }
     }

@@ -80,7 +80,7 @@ namespace SortAlgos
         /// <summary>
         ///     Output the SortingList data to file
         /// </summary>
-        /// <param name="fileName">The file name to output to (do not add .txt)</param>
+        /// <param name="fileName">The file name to output to (do not add .xml)</param>
         public void OutputListToFile(string fileName) {
             fileName = fileName + ".xml";
             var writer = new XmlSerializer(typeof(SortingBase));
@@ -89,7 +89,7 @@ namespace SortAlgos
 
             file.Close();
 
-            Process.Start(fileName);
+            //Process.Start(fileName);
             //Process.Start("explorer.exe", "/select," + fileName);
         }
     }
