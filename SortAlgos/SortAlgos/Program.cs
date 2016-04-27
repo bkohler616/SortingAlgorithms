@@ -51,17 +51,22 @@ namespace SortAlgos
             */
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sortToProcess"></param>
+        /// <param name="sortDescription"></param>
         private static void ProcessSort(SortingBase sortToProcess, string sortDescription) {
             var timer = new Stopwatch();
-            Console.WriteLine("Generating numbers for {0}", sortDescription); //If this doesn't work in VS 2012, switch with non-interpolated string.
+            Console.WriteLine("Generating numbers for {0}", sortDescription); 
             sortToProcess.GenerateData();
-            Console.WriteLine("Start {0}!", sortDescription); //If this doesn't work in VS 2012, switch with non-interpolated string.
+            Console.WriteLine("Start {0}!", sortDescription); 
             timer.Start();
             sortToProcess.PerformSort();
             timer.Stop();
             Console.WriteLine("\tTimer Elapsed: " + timer.Elapsed +
                               "\n\tTimer in MS: " + timer.ElapsedMilliseconds +
-                              "\n\tTimer in Ticks: " + timer.ElapsedTicks); //If this doesn't work in VS 2012, switch with non-interpolated string.
+                              "\n\tTimer in Ticks: " + timer.ElapsedTicks);
             Console.WriteLine("Outputting to file...");
             sortToProcess.OutputListToFile(sortDescription);
             timer.Reset();

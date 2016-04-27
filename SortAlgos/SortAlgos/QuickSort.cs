@@ -5,7 +5,10 @@ namespace SortAlgos
 {
     public class QuickSort : SortingBase
     {
-        public override void PerformSort() { quickSort(SortingList, 0, SortingList.Length - 1, true); }
+        /// <summary>
+        ///     Begin sorting the SortingList data.
+        /// </summary>
+        public override void PerformSort() { quickSort(SortingList, 0, SortingList.Length - 1, 2); }
 
         /// <summary>
         ///     Quicksort performed via a middle-item type
@@ -13,7 +16,8 @@ namespace SortAlgos
         /// <param name="data">the data to sort</param>
         /// <param name="low">the low end of the current pivot</param>
         /// <param name="high">the high end of the current pivot</param>
-        private void quickSort(int[] data, int low, int high, bool isMultithread) {
+        /// <param name="multithreadCount">enable multithreading for the stated amount of child sets.</param>
+        private void quickSort(int[] data, int low, int high, uint multithreadCount) {
             //No more sorting to do for this pivot end.
             if (low >= high)
                 return;
@@ -43,20 +47,23 @@ namespace SortAlgos
             }
 
             //Create new threads, and go further on each pivot if needed. This shaves time by ~300 ms
-            if (isMultithread) {
-                if (low < incrementalHigh) {
-                    Task.Factory.StartNew(() => { quickSort(data, low, incrementalHigh, false); });
-                }
-                if (high > incrementalLow) {
-                    Task.Factory.StartNew(() => { quickSort(data, incrementalLow, high, false); });
-                }
-                //Task.WaitAll(lowEnd, highEnd);//Aparently, this adds ~150-300 ms to the time.
+            if (multithreadCount == 0) {
+
+                if (low < incrementalHigh)
+                    quickSort(data, low, incrementalHigh, 0);
+                if (high > incrementalLow)
+                    quickSort(data, incrementalLow, high, 0); //It is better to use tail recursion rather than a loop. A loop increases time by ~ 4-8 ms
             }
             else {
                 if (low < incrementalHigh)
-                    quickSort(data, low, incrementalHigh, false);
+                {
+                    Task.Factory.StartNew(() => { quickSort(data, low, incrementalHigh, multithreadCount - 1); });
+                }
                 if (high > incrementalLow)
-                    quickSort(data, incrementalLow, high, false); //It is better to use tail recursion rather than a loop. A loop increases time by ~ 4-8 ms
+                {
+                    Task.Factory.StartNew(() => { quickSort(data, incrementalLow, high, multithreadCount - 1); });
+                }
+                //Task.WaitAll(lowEnd, highEnd);//Aparently, this adds ~150-300 ms to the time.
             }
         }
     }

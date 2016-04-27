@@ -14,7 +14,11 @@ namespace SortAlgos
         ///     The size limit of the data list.
         /// </summary>
         protected const int MaxSize = 500000;
-
+        
+        /// <summary>
+        /// The order the data will be generated.
+        /// </summary>
+        public GenerationOrder DataGenerationOrder { get; set; }
 
         /// <summary>
         ///     The data where all of the sorting information will be stored.
@@ -22,8 +26,9 @@ namespace SortAlgos
         public int[] SortingList { get; set; }
 
 
-        public GenerationOrder DataGenerationOrder { get; set; }
-
+        /// <summary>
+        /// Generate the data according to what DataGenerationOrder is.
+        /// </summary>
         public void GenerateData() {
             switch (DataGenerationOrder) {
                 case GenerationOrder.Ascending:
@@ -36,7 +41,7 @@ namespace SortAlgos
                     GenerateRandomData();
                     break;
                 default:
-                    throw new MissingMemberException("This sort order type is invalid, or unavailable");
+                    throw new MissingMemberException("This sort order type is invalid, or unavailable"); //An unknown sort type was provided. Can't continue.
             }
         }
 
@@ -58,7 +63,6 @@ namespace SortAlgos
         private void GenerateRandomData() {
             var rng = new Random();
             SortingList = new int[MaxSize];
-            //Generate numbers
             for (var i = 0; i < MaxSize; i++)
                 SortingList [i] = rng.Next(MaxSize);
         }
@@ -78,12 +82,12 @@ namespace SortAlgos
         public abstract void PerformSort();
 
         /// <summary>
-        ///     Output the SortingList data to file
+        ///     Output the SortingList data to .xml file
         /// </summary>
-        /// <param name="fileName">The file name to output to (do not add .xml)</param>
+        /// <param name="fileName">The file name to output to (do not add .xml to the string)</param>
         public void OutputListToFile(string fileName) {
             fileName = fileName + ".xml";
-            var writer = new XmlSerializer(typeof(SortingBase));
+            var writer = new XmlSerializer(typeof(SortingBase)); //Must serialize to prevent loss of data.
             var file = File.Create(fileName);
             writer.Serialize(file, this);
 
